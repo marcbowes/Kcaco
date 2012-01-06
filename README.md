@@ -93,11 +93,11 @@ But now you've done something horrible: if you `grep ERROR` in your
 log file, the number of lines returned is no longer the number of
 errors in your log. There are a bunch of ways around this:
 
-Log the entire backtrace on 1 line, e.g. using `"#{e.class.name}:
-#{e.message}" #{e.backtrace.inspect}`. This gives you ugly logs
+Log the entire backtrace on 1 line, This gives you ugly logs
 especially with long backtraces. For example:
 
-    $ bundle exec examples/no_kcaco_one_line.rb                                                                                                                                                  E, [2012-01-06T16:26:27.705513 #647] ERROR -- : MichaelBay::Boom: ba da bloom ["examples/no_kcaco_one_line.rb:10:in `explosions'", "examples/no_kcaco_one_line.rb:17"]
+    $ bundle exec examples/no_kcaco_one_line.rb
+    E, [2012-01-06T16:26:27.705513 #647] ERROR -- : MichaelBay::Boom: ba da bloom ["examples/no_kcaco_one_line.rb:10:in `explosions'", "examples/no_kcaco_one_line.rb:17"]
 
 Log the backtrace at a different level, e.g. `DEBUG`. This means you
 have to run with verbose logging:
