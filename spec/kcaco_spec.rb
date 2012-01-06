@@ -12,13 +12,13 @@ describe Kcaco do
       "RuntimeError: exception"
   end
 
-  it "should figure out the line number from a backtrace line" do
-    line = "/home/user/projects/kcaco/spec/support/boom.rb:10:in `raise'"
-    Kcaco.line_no_from_backtrace_line(line).should == 10
-  end
-
   it "should figure out the line number that caused the exception" do
     exception = boom.rescued
-    Kcaco.exception_line(exception).should == Boom.raise_line_no
+    Kcaco.exception_filename_and_line_no(exception).should == ["boom.rb", Boom.raise_line_no]
+  end
+
+  it "should create a pretty log entry" do
+    exception = boom.rescued
+    Kcaco.pretty(exception).should == "RuntimeError: exception [boom.rb L10]"
   end
 end
