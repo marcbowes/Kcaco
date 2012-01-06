@@ -8,6 +8,7 @@ describe Kcaco do
   
   it "should create a pretty log entry" do
     exception = boom.rescued
-    Kcaco.pretty(exception).should == "RuntimeError: exception [boom.rb L10]"
+    rest = Regexp.escape("RuntimeError: exception [boom.rb L10]")
+    Kcaco.pretty(exception).should =~ /[a-z0-9\-]+ #{rest}/
   end
 end

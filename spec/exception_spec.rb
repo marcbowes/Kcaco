@@ -20,5 +20,14 @@ module Kcaco
     it "should figure out the line number that caused the exception" do
       exception.line_no.should == Boom.raise_line_no
     end
+
+    it "should create a pretty version" do
+      exception.should_receive(:uuid).and_return("uuid")
+      exception.pretty.should == "uuid RuntimeError: exception [boom.rb L10]"
+    end
+
+    it "should make a uuid" do
+      exception.uuid.should =~ /[a-z0-9\-]+/
+    end
   end
 end

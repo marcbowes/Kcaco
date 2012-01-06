@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Kcaco.version
 
+  gem.add_runtime_dependency("guid")
   gem.add_development_dependency("rake")
   gem.add_development_dependency("rspec")
 end

@@ -1,6 +1,9 @@
 module Kcaco
   class Exception
 
+    require "guid"
+
+    
     attr_accessor :exception
     
     def initialize(exception)
@@ -20,11 +23,11 @@ module Kcaco
     end
 
     def filename
-      @filename ||= filename_and_line_no.first
+      filename_and_line_no.first
     end
 
     def line_no
-      @line_no ||= filename_and_line_no.last
+      filename_and_line_no.last
     end
     
     def title
@@ -36,9 +39,14 @@ module Kcaco
 
     def pretty
       [
+       uuid,
        title,
        "[%s L%i]" % [filename, line_no],
       ].join(" ")
+    end
+
+    def uuid
+      Guid.new.to_s
     end
   end
 end
