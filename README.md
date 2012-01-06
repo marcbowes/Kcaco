@@ -59,7 +59,14 @@ error in the payload for later debugging.
 
 ### Customize log message
 
-TBD.
+That's what the second parameter is for. By default, we construct a
+title using the exception's class and message (just like you'd see on
+`STDERR` if your program blew up). However, if you want to override
+it, just pass it in like so:
+
+```ruby
+Kcaco.pretty(exception, "boom")
+```
 
 ## Example
 

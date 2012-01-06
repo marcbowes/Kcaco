@@ -4,10 +4,11 @@ module Kcaco
     require "guid"
 
     
-    attr_accessor :exception, :payload
+    attr_accessor :exception, :title, :payload
     
-    def initialize(exception)
+    def initialize(exception, title = nil)
       self.exception = exception
+      self.title = title || title_from_exception
     end
 
 
@@ -46,7 +47,7 @@ module Kcaco
       filename_and_line_no.last
     end
     
-    def title
+    def title_from_exception
       [type, message].join(": ")
     end
 

@@ -13,23 +13,21 @@ module Kcaco
     end
 
 
+    def wrapped_hash
+      {
+        "time" => Time.now.iso8601,
+        "title" => exception.title,
+        "type" => exception.type,
+        "message" => exception.message,
+        "payload" => exception.payload,
+        "backtrace" => exception.backtrace,
+      }
+    end
+    
     def save(path)
       FileUtils.mkdir_p(File.dirname(path))
       File.open(path, "w") do |f|
-        [
-         ["time", Time.now.iso8601],
-         ["type", exception.type],
-         ["message", exception.message],
-         ["payload", exception.payload],
-        ].each do |label, text|
-          f.puts([label, text].join(": "))
-        end
-
-        f.puts("backtrace:")
-        exception.backtrace.each do |line|
-          f.puts(line)
-        end
-
+        f.puts(wrapped_hash.to_yaml)
         f.puts
         f.puts(exception.to_yaml)
       end
