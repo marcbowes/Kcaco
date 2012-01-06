@@ -26,6 +26,36 @@ world [(irb) L3]`. In case it's not obvious, the output contains a
 GUID, the class of the error and the filename and linenumber it
 occured on. In a single line ideal for logging.
 
+## Usage
+
+``` ruby
+require "kcaco"
+# in a rescue block, instead of the manual work:
+logger.error Kcaco.pretty(exception)
+```
+
+This will print out a message to your logs in the format: `GUID
+ExceptionClass: the message [filename.rb L123]`. Additionally, it will
+write out the exception object to `Kcaco.save_path` in a file named
+the same as that GUID. You can disable the save behavior with
+`Kcaco.auto_save = false`.
+
+## Example
+
+    $ bundle exec examples/simple.rb
+    900308c3-16ac-2803-ac97-db64464baae8 MichaelBay::Boom: ba da bloom [simple.rb L10]
+    
+    cat /tmp/kcaco/exceptions/900308c3-16ac-2803-ac97-db64464baae8 
+    time: 2012-01-06T16:01:53+02:00
+    type: MichaelBay::Boom
+    message: ba da bloom
+    backtrace:
+    examples/simple.rb:10:in `explosions'
+    examples/simple.rb:16
+    
+    --- !ruby/exception:MichaelBay::Boom 
+    message: ba da bloom
+
 ## Why?
 
 Long running processes (daemons) tend to err on the side of logging
@@ -63,43 +93,29 @@ But now you've done something horrible: if you `grep ERROR` in your
 log file, the number of lines returned is no longer the number of
 errors in your log. There are a bunch of ways around this:
 
-* Log the entire backtrace on 1 line, e.g. using `"#{e.class.name}:
-  #{e.message}" #{e.backtrace.inspect}`. This gives you ugly logs.
-* Log the backtrace at a different level, e.g. `DEBUG`. This means you
-  have to run with verbose logging.
-* Add additional smarts.
+Log the entire backtrace on 1 line, e.g. using `"#{e.class.name}:
+#{e.message}" #{e.backtrace.inspect}`. This gives you ugly logs
+especially with long backtraces. For example:
 
-Kcaco is the additional smarts. Quite simply what it does is:
+    $ bundle exec examples/no_kcaco_one_line.rb                                                                                                                                                  E, [2012-01-06T16:26:27.705513 #647] ERROR -- : MichaelBay::Boom: ba da bloom ["examples/no_kcaco_one_line.rb:10:in `explosions'", "examples/no_kcaco_one_line.rb:17"]
+
+Log the backtrace at a different level, e.g. `DEBUG`. This means you
+have to run with verbose logging:
+
+    $ bundle exec examples/no_kcaco_different_levels.rb
+    E, [2012-01-06T16:28:33.903684 #736] ERROR -- : MichaelBay::Boom: ba da bloom
+    D, [2012-01-06T16:28:33.903784 #736] DEBUG -- : examples/no_kcaco_different_levels.rb:10:in `explosions'
+    D, [2012-01-06T16:28:33.903814 #736] DEBUG -- : examples/no_kcaco_different_levels.rb:17
+    
+Or you can roll your own smarts. Repeatedly. Or just use some like Kcaco. Quite simply what it does is:
 
 * Save you having to format the log message by doing it for you.
 * Write more detail to a separate file where you can inspect it later.
 
-## Usage
+.. and you get
 
-``` ruby
-require "kcaco"
-# in a rescue block, instead of the manual work:
-logger.error Kcaco.pretty(exception)
-```
+    bundle exec examples/simple.rb
+    E, [2012-01-06T16:29:50.730922 #793] ERROR -- : ae58d80f-4bc3-899a-fd0b-2c831833510c MichaelBay::Boom: ba da bloom [simple.rb L11]
 
-This will print out a message to your logs in the format: `GUID
-ExceptionClass: the message [filename.rb L123]`. Additionally, it will
-write out the exception object to `Kcaco.save_path` in a file named
-the same as that GUID. You can disable the save behavior with
-`Kcaco.auto_save = false`.
-
-## Example
-
-    $ bundle exec examples/simple.rb
-    900308c3-16ac-2803-ac97-db64464baae8 MichaelBay::Boom: ba da bloom [simple.rb L10]
-    
-    cat /tmp/kcaco/exceptions/900308c3-16ac-2803-ac97-db64464baae8 
-    time: 2012-01-06T16:01:53+02:00
-    type: MichaelBay::Boom
-    message: ba da bloom
-    backtrace:
-    examples/simple.rb:10:in `explosions'
-    examples/simple.rb:16
-    
-    --- !ruby/exception:MichaelBay::Boom 
-    message: ba da bloom
+In this example, you could see the saved exception
+`ae58d80f-4bc3-899a-fd0b-2c831833510c` on disk to get the full backtrace.

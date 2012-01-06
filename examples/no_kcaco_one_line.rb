@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require "logger"
-require "kcaco"
 
 class MichaelBay
 
@@ -17,6 +16,6 @@ if __FILE__ == $0
   begin
     MichaelBay.new.explosions
   rescue => e
-    logger.error Kcaco.pretty(e)
+    logger.error "#{e.class.name}: #{e.message} #{e.backtrace.inspect}"
   end
 end
