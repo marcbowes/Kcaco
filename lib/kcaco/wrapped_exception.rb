@@ -1,5 +1,5 @@
 module Kcaco
-  class Exception
+  class WrappedException
 
     require "guid"
 
@@ -11,6 +11,22 @@ module Kcaco
     end
 
 
+    def type
+      exception.class.name
+    end
+    
+    def message
+      exception.message
+    end
+    
+    def backtrace
+      exception.backtrace
+    end
+    
+    def to_yaml
+      exception.to_yaml
+    end
+    
     def extract_filename_and_line_no(line)
       if (m = line.match(/(.+):(\d+):/))
         [File.basename(m[1]), m[2].to_i]
@@ -19,7 +35,7 @@ module Kcaco
 
     def filename_and_line_no
       @filename_and_line_no ||= 
-        extract_filename_and_line_no(exception.backtrace.first)
+        extract_filename_and_line_no(backtrace.first)
     end
 
     def filename
@@ -31,10 +47,7 @@ module Kcaco
     end
     
     def title
-      [
-       exception.class.name,
-       exception.message,
-      ].join(": ")
+      [type, message].join(": ")
     end
 
     def pretty
@@ -46,7 +59,7 @@ module Kcaco
     end
 
     def uuid
-      Guid.new.to_s
+      @uuid ||= Guid.new.to_s
     end
   end
 end
