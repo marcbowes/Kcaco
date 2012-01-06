@@ -109,7 +109,8 @@ have to run with verbose logging:
     D, [2012-01-06T16:28:33.903784 #736] DEBUG -- : examples/no_kcaco_different_levels.rb:10:in `explosions'
     D, [2012-01-06T16:28:33.903814 #736] DEBUG -- : examples/no_kcaco_different_levels.rb:17
     
-Or you can roll your own smarts. Repeatedly. Or just use some like Kcaco. Quite simply what it does is:
+Or you can roll your own smarts. Repeatedly. Or just use something
+like Kcaco. Quite simply what it does is:
 
 * Save you having to format the log message by doing it for you.
 * Write more detail to a separate file where you can inspect it later.
