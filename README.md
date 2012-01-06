@@ -117,7 +117,7 @@ like Kcaco. Quite simply what it does is:
 
 .. and you get
 
-    bundle exec examples/simple.rb
+    $ bundle exec examples/simple.rb
     E, [2012-01-06T16:29:50.730922 #793] ERROR -- : ae58d80f-4bc3-899a-fd0b-2c831833510c MichaelBay::Boom: ba da bloom [simple.rb L11]
 
 In this example, you could see the saved exception
