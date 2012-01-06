@@ -24,7 +24,9 @@ This will print out a line like so:
 `a84aedf9-8cda-13dd-123f-c8572078ea90 RuntimeError: Goodbye, cruel
 world [(irb) L3]`. In case it's not obvious, the output contains a
 GUID, the class of the error and the filename and linenumber it
-occured on. In a single line ideal for logging.
+occured on. In a single line ideal for logging. Additionally, we
+serialize the exception to disk (hence the GUID - the filename we save
+it too) so you can look at it later.
 
 ## Usage
 
