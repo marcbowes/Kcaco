@@ -1,5 +1,14 @@
 require "kcaco/version"
 
 module Kcaco
-  # Your code goes here...
+
+  class << self
+
+    def exception_title(exception)
+      [
+       exception.class.name,
+       exception.message,
+      ].join(": ")
+    end
+  end
 end

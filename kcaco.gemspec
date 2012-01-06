@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = Dir["spec/**/*"]
   gem.name          = "kcaco"
   gem.require_paths = ["lib"]
-  gem.version       = Kcaco::VERSION
+  gem.version       = Kcaco.version
 
   gem.add_development_dependency("rake")
   gem.add_development_dependency("rspec")

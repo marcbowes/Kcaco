@@ -1,3 +1,7 @@
 module Kcaco
-  VERSION = "0.0.1"
+
+  def version
+    "0.0.1"
+  end
+  module_function :version
 end
