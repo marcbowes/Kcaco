@@ -21,7 +21,7 @@ module Kcaco
     def save_path(wrapped_exception = nil)
       @save_path ||= "/tmp/kcaco/exceptions"
       if wrapped_exception
-        File.join(@save_path, wrapped_exception)
+        File.join(@save_path, wrapped_exception.uuid)
       else
         @save_path
       end
