@@ -11,12 +11,14 @@ Kcaco helps by providing some helper functions around dealing with
 exceptions. Specifically with regards to logging the bastard so you
 can deal with it. Example:
 
-    require "kcaco"
-    begin
-      raise RuntimeError.new("Goodbye, cruel world")
-    rescue => e
-      puts Kcaco.pretty(e)
-    end
+``` ruby
+require "kcaco"
+begin
+  raise RuntimeError.new("Goodbye, cruel world")
+rescue => e
+  puts Kcaco.pretty(e)
+end
+```
 
 This will print out a line like so:
 `a84aedf9-8cda-13dd-123f-c8572078ea90 RuntimeError: Goodbye, cruel
@@ -41,17 +43,21 @@ In a daemon, its natural to want just as much information. Except you
 will want to use a logger - especially at the appropriate level. You
 may write something like this to get similar output in your logs:
 
-    begin
-      # ...
-    rescue => e
-      logger.error "#{e.class.name}: #{e.message}"
-    end
+``` ruby
+begin
+  # ...
+rescue => e
+  logger.error "#{e.class.name}: #{e.message}"
+end
+```
 
 But now you don't know where the error came from (backtrace line #1)
 or actually anything else from the backtrace. You can extend the code
 with something like:
 
-    e.backtrace.each do |line| logger.error(line); end
+``` ruby
+e.backtrace.each do |line| logger.error(line); end
+```
 
 But now you've done something horrible: if you `grep ERROR` in your
 log file, the number of lines returned is no longer the number of
@@ -70,9 +76,11 @@ Kcaco is the additional smarts. Quite simply what it does is:
 
 ## Usage
 
-    require "kcaco"
-    # in a rescue block, instead of the manual work:
-    logger.error Kcaco.pretty(exception)
+``` ruby
+require "kcaco"
+# in a rescue block, instead of the manual work:
+logger.error Kcaco.pretty(exception)
+```
 
 This will print out a message to your logs in the format: `GUID
 ExceptionClass: the message [filename.rb L123]`. Additionally, it will
