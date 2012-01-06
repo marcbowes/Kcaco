@@ -4,7 +4,7 @@ module Kcaco
     require "guid"
 
     
-    attr_accessor :exception
+    attr_accessor :exception, :payload
     
     def initialize(exception)
       self.exception = exception

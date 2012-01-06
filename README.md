@@ -42,6 +42,25 @@ write out the exception object to `Kcaco.save_path` in a file named
 the same as that GUID. You can disable the save behavior with
 `Kcaco.auto_save = false`.
 
+### Payloads
+
+If you have additional information to store, you can do so by parsing
+in a payload with the block syntax (`examples/block.rb`).
+
+```ruby
+Kcaco.pretty(exception) { "payload" }
+```
+
+This will not affect the logged message but will write out the payload
+in the saved exception. This can be useful if you want to store
+state. For example, if your application is processing a queue and you
+got an exception, you could store the queue message that triggered the
+error in the payload for later debugging.
+
+### Customize log message
+
+TBD.
+
 ## Example
 
     $ bundle exec examples/simple.rb

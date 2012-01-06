@@ -20,6 +20,7 @@ module Kcaco
          ["time", Time.now.iso8601],
          ["type", exception.type],
          ["message", exception.message],
+         ["payload", exception.payload],
         ].each do |label, text|
           f.puts([label, text].join(": "))
         end

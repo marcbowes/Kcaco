@@ -34,6 +34,7 @@ module Kcaco
     
     def pretty(exception)
       wrapped_exception = Kcaco::WrappedException.new(exception)
+      wrapped_exception.payload = yield if block_given?
       save(wrapped_exception) if auto_save?
       wrapped_exception.pretty
     end
